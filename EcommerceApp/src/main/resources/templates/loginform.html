@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ecommerce App</title>
+</head>
+<body>
+<div>
+    <h1>Ecommerce App</h1>
+    <h3>Login</h3>
+    <form th:action="@{/doLogin}" method="post">
+        <label >Username</label>
+        <input type="text" name="username" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <input type="submit" value="Sign In">
+    </form>
+</div>
+
+
+</body>
+</html>
