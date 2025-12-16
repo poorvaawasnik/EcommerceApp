@@ -3,19 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        /* Navbar */
+        #navbar {
+            height: 60px;
+            width: 100%;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #navbar h3 {
+            font-weight: 500;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #1f2933;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            padding-top: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+        }
+
+        #sidebar ul {
+            list-style: none;
+        }
+
+        #sidebar ul li {
+            padding: 14px 25px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #sidebar ul li:hover {
+            background: #4e54c8;
+            color: #fff;
+            padding-left: 35px;
+        }
+
+        /* Active menu (optional) */
+        #sidebar ul li.active {
+            background: #4e54c8;
+            color: #fff;
+        }
+
+        /* Content area (optional future use) */
+        .content {
+            margin-left: 220px;
+            margin-top: 60px;
+            padding: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 180px;
+            }
+
+            .content {
+                margin-left: 180px;
+            }
+        }
+    </style>
 </head>
+
 <body>
+
 <div id="navbar">
     <h3>Welcome to Dashboard</h3>
-
 </div>
-<div  id="sidebar">
+
+<div id="sidebar">
     <ul>
-        <li>Home</li>
+        <li class="active">Home</li>
         <li>Category</li>
         <li>Product</li>
-        <li>List Pro</li>
+        <li>List Products</li>
     </ul>
 </div>
+
+<!-- Optional content section -->
+<div class="content">
+    <h2>Dashboard Content</h2>
+    <p>Add your main content here.</p>
+</div>
+
 </body>
 </html>

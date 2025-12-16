@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Category Form</title>
+
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        /* Navbar */
+        #navbar {
+            height: 60px;
+            width: 100%;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #1f2933;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            padding-top: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+        }
+
+        #sidebar ul {
+            list-style: none;
+        }
+
+        #sidebar ul li {
+            padding: 14px 25px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #sidebar ul li:hover,
+        #sidebar ul li.active {
+            background: #4e54c8;
+            color: #fff;
+            padding-left: 35px;
+        }
+
+        /* Content Area */
+        .content {
+            margin-left: 220px;
+            margin-top: 60px;
+            padding: 40px;
+        }
+
+        /* Form Card */
+        .card {
+            background: #fff;
+            padding: 30px;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h1 {
+            margin-bottom: 20px;
+            color: #1f2933;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4e54c8;
+        }
+
+        input[type="submit"] {
+            background: #4e54c8;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background: #3b3fc1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 180px;
+            }
+
+            .content {
+                margin-left: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div id="navbar">
+    <h3>Dashboard</h3>
+</div>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <ul>
+        <li>Home</li>
+        <li class="active">Category</li>
+        <li>Product</li>
+        <li>List Products</li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    <div class="card">
+        <h1>Add Category</h1>
+        <hr style="margin-bottom: 20px;">
+
+        <form th:action="@{/dashboard/categorysubmit}" method="post">
+            <div class="form-group">
+                <label>Category</label>
+                <input type="text" name="category" placeholder="Enter category name" required>
+            </div>
+
+            <input type="submit" value="Add Category">
+        </form>
+    </div>
+</div>
+<h1>Category list</h1>
+<hr>
+<table class="styled-table">
+<table>
+    <thead>
+    <tr>
+        <th>Category Name</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+
+        <tbody>
+    <tr th:each="item : ${categoryEntityList}">
+        <td th:text="${item.name}"></td>
+        <td><a th:href="@{'/dashboard/categorydelete/'+${item.id}}"><button>Delete</button></a></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
