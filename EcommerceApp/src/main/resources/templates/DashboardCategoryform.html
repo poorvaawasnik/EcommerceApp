@@ -5,7 +5,6 @@
     <title>Dashboard Category Form</title>
 
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +29,6 @@
             top: 0;
             left: 0;
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* Sidebar */
@@ -42,49 +40,45 @@
             top: 60px;
             left: 0;
             padding-top: 20px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.15);
         }
 
         #sidebar ul {
             list-style: none;
         }
 
-        #sidebar ul li {
+        #sidebar ul li a {
+            display: block;
             padding: 14px 25px;
             color: #d1d5db;
-            cursor: pointer;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        #sidebar ul li:hover,
-        #sidebar ul li.active {
+        #sidebar ul li a:hover,
+        #sidebar ul li a.active {
             background: #4e54c8;
             color: #fff;
             padding-left: 35px;
         }
 
-        /* Content Area */
+        /* Content */
         .content {
             margin-left: 220px;
             margin-top: 60px;
             padding: 40px;
         }
 
-        /* Form Card */
+        /* Card */
         .card {
             background: #fff;
             padding: 30px;
             max-width: 500px;
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
 
         .card h1 {
-            margin-bottom: 20px;
-            color: #1f2933;
-        }
-
-        .form-group {
             margin-bottom: 20px;
         }
 
@@ -92,7 +86,6 @@
             display: block;
             margin-bottom: 6px;
             font-weight: 500;
-            color: #374151;
         }
 
         input[type="text"] {
@@ -100,94 +93,111 @@
             padding: 12px;
             border-radius: 6px;
             border: 1px solid #d1d5db;
-            font-size: 15px;
-            outline: none;
-            transition: border 0.3s;
-        }
-
-        input[type="text"]:focus {
-            border-color: #4e54c8;
         }
 
         input[type="submit"] {
+            margin-top: 15px;
             background: #4e54c8;
             color: #fff;
             border: none;
             padding: 12px 30px;
             border-radius: 6px;
-            font-size: 15px;
             cursor: pointer;
-            transition: background 0.3s ease;
         }
 
-        input[type="submit"]:hover {
-            background: #3b3fc1;
+        /* Table */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            #sidebar {
-                width: 180px;
-            }
+        .styled-table th,
+        .styled-table td {
+            padding: 14px 16px;
+            text-align: left;
+        }
 
-            .content {
-                margin-left: 180px;
-            }
+        .styled-table thead {
+            background: #4e54c8;
+            color: #fff;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .styled-table tbody tr:hover {
+            background: #f3f4f6;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
 
-<!-- Navbar -->
 <div id="navbar">
     <h3>Dashboard</h3>
 </div>
 
-<!-- Sidebar -->
 <div id="sidebar">
     <ul>
-        <li>Home</li>
-        <li class="active">Category</li>
-        <li>Product</li>
-        <li>List Products</li>
+        <li><a th:href="@{/dashboard}">Home</a></li>
+        <li><a class="active" th:href="@{/dashboard/category-form}">Category</a></li>
+        <li><a th:href="@{/dashboard/product-form}">Product</a></li>
+        <li><a href="#">List Products</a></li>
     </ul>
 </div>
 
-<!-- Main Content -->
 <div class="content">
+
+    <!-- Add Category -->
     <div class="card">
         <h1>Add Category</h1>
-        <hr style="margin-bottom: 20px;">
 
         <form th:action="@{/dashboard/categorysubmit}" method="post">
-            <div class="form-group">
-                <label>Category</label>
-                <input type="text" name="category" placeholder="Enter category name" required>
-            </div>
 
+        <label>Category</label>
+            <input type="text" name="category" placeholder="Enter category name" required>
             <input type="submit" value="Add Category">
         </form>
     </div>
-</div>
-<h1>Category list</h1>
-<hr>
-<table class="styled-table">
-<table>
-    <thead>
-    <tr>
-        <th>Category Name</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
 
+    <!-- Category List -->
+    <h2 style="margin-bottom: 15px;">Category List</h2>
+
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th>Category Name</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
         <tbody>
-    <tr th:each="item : ${categoryEntityList}">
-        <td th:text="${item.name}"></td>
-        <td><a th:href="@{'/dashboard/categorydelete/'+${item.id}}"><button>Delete</button></a></td>
-    </tr>
-    </tbody>
-</table>
+        <tr th:each="item : ${categoryEntityList}">
+            <td th:text="${item.name}"></td>
+
+            <td>
+                <a th:href="@{'/dashboard/categorydelete/'+${item.id}}">
+                    <button class="delete-btn">Delete</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 
 </body>
 </html>

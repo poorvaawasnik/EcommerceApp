@@ -7,23 +7,23 @@ import jakarta.persistence.Id;
 
 @Entity
 public class CategoryEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private  int id;
-    private String cname;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    public CategoryEntity(String cname) {
-        this.cname = cname;
+    private String name;
+
+    // ✅ Required by JPA
+    public CategoryEntity() {
     }
 
-    public String getCname() {
-        return cname;
+    // ✅ Convenience constructor
+    public CategoryEntity(String name) {
+        this.name = name;
     }
 
-    public void setCname(String cname) {
-        this.cname = cname;
-    }
-
+    // ✅ Getters & Setters
     public int getId() {
         return id;
     }
@@ -32,14 +32,11 @@ public class CategoryEntity {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "CategoryEntity{" +
-                "cname='" + cname + '\'' +
-                ", id=" + id +
-                '}';
+    public String getName() {
+        return name;
     }
 
-    public CategoryEntity() {
+    public void setName(String name) {
+        this.name = name;
     }
 }

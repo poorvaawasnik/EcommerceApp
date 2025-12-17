@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
@@ -53,26 +53,27 @@
             list-style: none;
         }
 
-        #sidebar ul li {
+        #sidebar ul li a {
+            display: block;
             padding: 14px 25px;
             color: #d1d5db;
-            cursor: pointer;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        #sidebar ul li:hover {
+        #sidebar ul li a:hover {
             background: #4e54c8;
             color: #fff;
             padding-left: 35px;
         }
 
-        /* Active menu (optional) */
-        #sidebar ul li.active {
+        /* Active menu */
+        #sidebar ul li a.active {
             background: #4e54c8;
             color: #fff;
         }
 
-        /* Content area (optional future use) */
+        /* Content */
         .content {
             margin-left: 220px;
             margin-top: 60px;
@@ -100,14 +101,27 @@
 
 <div id="sidebar">
     <ul>
-        <li class="active">Home</li>
-        <li>Category</li>
-        <li>Product</li>
-        <li>List Products</li>
+        <li>
+            <a th:href="@{/dashboard}" class="active">Home</a>
+        </li>
+        <li>
+            <a th:href="@{/dashboard/category-form}">Category</a>
+        </li>
+        <li>
+            <a th:href="@{/dashboard/product-form}">Product</a>
+        </li>
+        <li>
+            <a href="#">List Products</a>
+        </li>
+        <li>
+            <a href="#">Orders</a>
+        </li>
+        <li>
+            <a th:href="@{/logout}">Logout</a>
+        </li>
     </ul>
 </div>
 
-<!-- Optional content section -->
 <div class="content">
     <h2>Dashboard Content</h2>
     <p>Add your main content here.</p>

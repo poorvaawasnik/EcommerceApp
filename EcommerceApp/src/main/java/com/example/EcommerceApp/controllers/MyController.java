@@ -1,53 +1,86 @@
 package com.example.EcommerceApp.controllers;
 
-
 import com.example.EcommerceApp.entity.CategoryEntity;
 import com.example.EcommerceApp.service.CategoryService;
+import com.example.EcommerceApp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Controller
 public class MyController {
-    @Autowired
-    CategoryService categoryService;
 
-    @RequestMapping("")
-    public String index(){
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ProductService productService;
+
+    // Home
+    @GetMapping("/")
+    public String index() {
         return "index";
     }
-    @RequestMapping("/login")
-    public String loginFormView(){
+
+    // Login
+    @GetMapping("/login")
+    public String loginFormView() {
         return "loginform";
     }
-    @RequestMapping("/dashboard")
-    public String dashboard(){
+
+    // Dashboard
+    @GetMapping("/dashboard")
+    public String dashboard() {
         return "dashboard";
     }
-    @RequestMapping("/Dashboard/Categoryform")
-    public String DashboardCategoryform(Model model){
-        List<CategoryEntity> categoryEntityList=categoryService.getAllCategory();
-        model.addAttribute("categoryEntityList",categoryEntityList);
+
+    // Category Form
+    @GetMapping("/dashboard/category-form")
+    public String dashboardCategoryForm(Model model) {
+        List<CategoryEntity> categoryEntityList = categoryService.getAllCategory();
+        model.addAttribute("categoryEntityList", categoryEntityList);
         return "DashboardCategoryform";
     }
 
-    @RequestMapping("/dashboard/categorysubmit")
-    public String dashboardCategorySubmit(@RequestParam ("category") String cname){
+    // Category Submit
+    @PostMapping("/dashboard/category-submit")
+    public String dashboardCategorySubmit(@RequestParam("category") String cname) {
         CategoryEntity entity = new CategoryEntity(cname);
         categoryService.saveCategory(entity);
-        return "redirect:/Dashboard/Categoryform";
+        return "redirect:/dashboard/category-form";
+    }
 
+    // Category Delete
+    @GetMapping("/dashboard/category-delete/{cid}")
+    public String dashboardCategoryDelete(@PathVariable int cid) {
+        categoryService.deleteCategory(cid);
+        return "redirect:/dashboard/category-form";
     }
-    @RequestMapping("/dashboard/categorydelete/{cid}")
-    public String dashboardCategoryDelete(@PathVariable("cid") String cid)
-    {
-        int id=Integer.parseInt(cid);
-        categoryService.deleteCategory(id);
-        return "redirect:/Dashboard/Categoryform";
+
+    // Product Form
+    @GetMapping("/dashboard/product-form")
+    public String dashboardProductForm(Model model) {
+        List<CategoryEntity> categoryEntityList = categoryService.getAllCategory();
+        model.addAttribute("categoryEntityList", categoryEntityList);
+        return "dashboardProductForm";
     }
+    @PostMapping("/dashboard/product-save")
+    public String saveProduct(
+            @RequestParam String name,
+            @RequestParam double price,
+            @RequestParam int categoryId,
+            @RequestParam String details,
+            @RequestParam MultipartFile image
+    ) {
+        // save logic
+        return "redirect:/dashboard/product-form";
+    }
+
 }
